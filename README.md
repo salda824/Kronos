@@ -27,5 +27,5 @@ Este script requiere una cuenta de servicio de Google para acceder a la API de G
 
 Con esto deberias poder ejecutar el codigo de python sin ningun problema
 
-##Instrucciones codigo para enviar correos
+## Instrucciones codigo para enviar correos
 Debes entrar a google Apps Scripts y agregar el codigo en la parte del editor de codigo, no debe ir nada mas aparte del codigo. De igual manera se debe configurar en el icono del reloj un activador que ejecute la función verificar y enviar correo y que el tipo de evento sea al editarse, lo demas permanece en predeterminado. Le das a guardar y listo, el codigo debería servir sin problemas.
