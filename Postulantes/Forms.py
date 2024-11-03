@@ -7,7 +7,7 @@ def forms_to_sheets():
     scopes = ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
 
     # Carga las credenciales de la cuenta de servicio con los scopes
-    creds = Credentials.from_service_account_file("rich-phenomenon-440300-k7-a74460cbe849.json", scopes=scopes)
+    creds = Credentials.from_service_account_file("Ingrsar ruta de acceso de la credencial.jason", scopes=scopes)
     client = gspread.authorize(creds)
 
     # Accede a la hoja de Google Sheets
