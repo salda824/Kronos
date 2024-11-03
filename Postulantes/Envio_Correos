@@ -1,0 +1,53 @@
+//Esta funcion se corre desde google Apps Scripts y se envia un correo cada que se actualiza la informacion de un nuevo postulante
+function enviarCorreo(postulanteIndex, estado) {
+  // Obtener la hoja activa y los datos del postulante
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  
+  // Obtener el correo electrónico del postulante desde la segunda columna
+  var email = sheet.getRange(postulanteIndex, 2).getValue();  // Suponiendo que el correo está en la segunda columna
+  
+  // Configurar el asunto del correo y el mensaje según el estado
+  var subject = "Resultado de tu postulación en el programa de Aceleración";
+  var message;
+
+  if (estado === "aceptado") {
+    message = "¡Felicidades! Tu postulación ha sido aceptada en el programa de Aceleración. Pronto recibirás en tu correo electrónico las credenciales de acceso a nuestro portal web.";
+  } else if (estado === "rechazado") {
+    message = "Lamentamos informarte que tu postulación ha sido rechazada en esta ocasión.";
+  } else if (estado === "en revisión") {
+    message = "Gracias por tu interés. Actualmente, tu postulación está en proceso de revisión. Nos pondremos en contacto contigo pronto.";
+  }
+
+  // Logo de la empresa (URL pública de la imagen)
+  var logoUrl = "https://cdn.prod.website-files.com/5ee1205133aab8ebebcb0e8d/66540f17a5a6b1d19e28bc8b_Upview%20Ventures%20logo.jpg";  // Reemplaza esta URL con el enlace de tu logo
+
+  // Cuerpo del mensaje en HTML
+  var htmlMessage = `
+    <div>
+      <p>${message}</p>
+      <p>Saludos,<br>El equipo de Upview Ventures</p>
+      <img src="${logoUrl}" alt="Logo de la Empresa" width="200" height="200">
+    </div>
+  `;
+
+  // Enviar el correo en formato HTML solo si email y message tienen valores válidos
+  if (email && message) {
+    MailApp.sendEmail({
+      to: email,
+      subject: subject,
+      htmlBody: htmlMessage
+    });
+  }
+}
+
+function verificarYEnviarCorreo() {
+  // Obtener la hoja y la última fila con datos
+  var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  var lastRow = sheet.getLastRow();
+
+  // Obtener el estado de la última fila en la columna "Estado"
+  var estado = sheet.getRange(lastRow, sheet.getLastColumn()).getValue();  // Última columna es "Estado"
+
+  // Llamar a la función de envío de correo para la última fila
+  enviarCorreo(lastRow, estado);
+}
